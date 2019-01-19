@@ -1,6 +1,6 @@
 #Steps
 * step1
-	> Download all pubmed texts and localize them（functionpart/pubtator29）
+	> Download all pubmed texts and localize them(functionpart/pubtator29)
 
 * step2
 	> Search the database with 2001 genes.(2001.txt)
@@ -25,14 +25,14 @@
 	> Download the drugbank data and localize it to the database.
 
 * step7
-	> The genes related to 581 sentences were searched in the drugbank database, and the up-and-down relationship was restricted.(65个/mnt/disk1/Pubtator29/interractionpart2/genelist65.txt)
-	> Obtained 118 drugs（/mnt/disk1/Pubtator29/interractionpart2/filtered_drugs118.txt) and 34 genes（/mnt/disk1/Pubtator29/interractionpart2/filtered_genes34.txt）
+	> The genes related to 581 sentences were searched in the drugbank database, and the up-and-down relationship was restricted.(interaction/genelist65.txt)
+	> Obtained 118 drugs(interaction/filtered_drugs118.txt) and 34 genes（interaction/filtered_genes34.txt）
 	> Obtained a drug genetic relationship of 426 pairs.(interaction/result426.txt)
 * step8
 	> The result of manual proofreading 426 pairs was 65.49%. Remove the unknown modified LOF/GOF predictions instead.(interaction/result_labeled_0106.txt)
-	> There are 309 remaining pairs（interaction）and 29 genes.（interaction/genelist.txt）
+	> There are 309 remaining pairs(interaction)and 29 genes.(interaction/genelist.txt)
 	> The artificially corrected gene was searched again in the drugbank.
-	> Get 281 relationship pairs.（interaction/drugbank_result1.txt）It contains 28 genes and 112 drugs.（interaction/filtered_drugs.txt）（interaction/filtered_genes.txt）
+	> Get 281 relationship pairs.(interaction/drugbank_result1.txt)It contains 28 genes and 112 drugs.(interaction/filtered_drugs.txt)(interaction/filtered_genes.txt)
 	
 	
 Run：
