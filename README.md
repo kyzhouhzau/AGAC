@@ -1,59 +1,64 @@
-#步骤
-* 第一步
-	> 下载所有pubmed文本并本地化（/mnt/disk1/Pubtator29/functionpart1/pubtator29）
+#Steps
+* step1
+	> Download all pubmed texts and localize them（functionpart/pubtator29）
 
-* 第二步
-	> 用2001个基因搜索数据库。(/mnt/disk1/Pubtator29/functionpart1/build_data/2001.txt)
-	> 有1951个基因有搜索结果。(/mnt/disk1/Pubtator29/functionpart1/pmid)
-	> 共搜索到4791972篇文本。(/mnt/disk1/Pubtator29/functionpart1/pmid) (统计方法：wc -l pmid/*)
+* step2
+	> Search the database with 2001 genes.(2001.txt)
+	> There are 1951 genes with search results.(functionpart/pmid)
+	> A total of 479,1972 texts were searched out.(functionpart/pmid) (wc -l pmid/*)
 	
-* 第三步
-	> 用突变和癫痫相关名字过滤文本。
-	> 965个基因有相关文本。(/mnt/disk1/Pubtator29/functionpart1/Filtered_version2)
-	> 有文本共10221篇。(/mnt/disk1/Pubtator29/functionpart1/Filtered_version2)
+* step3
+	> Filter text with mutation and epilepsy-related names.
+	> 965 genes have related texts.(functionpart/Filtered_version2)
+	> There are a total of 10,221 articles.(functionpart/Filtered_version2)
 	
-* 第四步
-	> 切分句子，并将可能得上下句合并,基于规则。(/mnt/disk1/Pubtator29/functionpart1/sentence_level_version2)
-	> 有683个基因有相关描述，有10366个句子有相关描述。(/mnt/disk1/Pubtator29/functionpart1/sentence_level_version2)
+* step4
+	> Split the sentences and merge the upper and lower sentences, based on the rules.(functionpart/sentence_level_version2)
+	> There are 683 genes with related descriptions and 10,366 sentences with related descriptions.(functionpart/sentence_level_version2)
 
-* 第五步
-	> 用AGAC语料库训练实体识别模型，提取10366个句子的特征。
-	> 用AGAC语料库训练分类模型，对10366个句子做LOF/GOF/Unknown分类。
-	> 去除标注为unknown的句子剩下581个句子。(/mnt/disk2/kyzhou/OMIM/AGAC_CRF/predict_result.txt)
+* step5
+	> The AGAC corpus is used to train the entity recognition model to extract the features of 10,366 sentences.
+	> The classification model was trained with the AGAC corpus and the LOF/GOF/Unknown classification was performed on 10366 sentences.
+	> Remove the sentence labeled unknown with 581 sentences left.(NER_classification/predict_result.txt)
 
-* 第六步
-	> 下载drugbank数据，并本地化到数据库.
+* step6
+	> Download the drugbank data and localize it to the database.
 
-* 第七步
-	> 将581个句子所相关的基因(65个/mnt/disk1/Pubtator29/interractionpart2/genelist65.txt)到drugbank数据库搜索，并限制上下调关系相对应。	
-	> 获得药物118个（/mnt/disk1/Pubtator29/interractionpart2/filtered_drugs118.txt），基因34个（/mnt/disk1/Pubtator29/interractionpart2/filtered_genes34.txt）
-	> 获得药物基因关系对426对。(/mnt/disk1/Pubtator29/interractionpart2/result426.txt)
-* 第八步
-	> 人工校对426对结果，分类正确率65.49%。删除unknown的修改LOF/GOF预测相反的。(/mnt/disk1/Pubtator29/interractionpart2/result_labeled_0106.txt)
-	> 剩余309个关系对。（/mnt/disk1/Pubtator29/interractionpart2）基因29个（/mnt/disk1/Pubtator29/interractionpart2/genelist.txt）
-	> 人工矫正后的基因重新在drugbank中搜索。
-	> 获得281个关系对。（/mnt/disk1/Pubtator29/interractionpart2/drugbank_result1.txt）
-		其中包含基因28个，药物112个。（/mnt/disk1/Pubtator29/interractionpart2/filtered_drugs.txt）（/mnt/disk1/Pubtator29/interractionpart2/filtered_genes.txt）
+* step7
+	> The genes related to 581 sentences were searched in the drugbank database, and the up-and-down relationship was restricted.(65个/mnt/disk1/Pubtator29/interractionpart2/genelist65.txt)
+	> Obtained 118 drugs（/mnt/disk1/Pubtator29/interractionpart2/filtered_drugs118.txt) and 34 genes（/mnt/disk1/Pubtator29/interractionpart2/filtered_genes34.txt）
+	> Obtained a drug genetic relationship of 426 pairs.(interaction/result426.txt)
+* step8
+	> The result of manual proofreading 426 pairs was 65.49%. Remove the unknown modified LOF/GOF predictions instead.(interaction/result_labeled_0106.txt)
+	> There are 309 remaining pairs（interaction）and 29 genes.（interaction/genelist.txt）
+	> The artificially corrected gene was searched again in the drugbank.
+	> Get 281 relationship pairs.（interaction/drugbank_result1.txt）It contains 28 genes and 112 drugs.（interaction/filtered_drugs.txt）（interaction/filtered_genes.txt）
 	
 	
-代码运行流程：
-1、index.py
-下载pubtator文本用splitfile.py预处理，并用index.py脚本本地化到elasticsearch数据库中。
-2、get_pmid.py
-以2001个基因为输入获取对应基因的pmid list。
-3、get_abstract.py
-用该脚本以突变和癫痫为查询条件搜索出相关文本。
-4、sentence_level.py
-对搜索出的结果按照一定的规则进行分句（包括上下句逻辑关系，包含突变，包含目标基因）。
-5、AGAC_CRF
-分句后的数据放在文件夹AGAC_CRF\agac_test中
-运行convert2bio.py
-运行wapiti_agac.sh（实体识别）
-运行Decision_tree.py获得分类结果predict_result.txt
-对结果人工矫正
-6、下载drubank并本地化
-drugbank.py解析drugbank数据并用index.py本地化到数据库
-get_drugs.py搜索本地数据库并宇人工矫正后的predict_result配对
+Run：
+
+1.python splitfile.py and python index.py
+The download pubtator text is preprocessed with splitfile.py and localized to the elasticsearch database using the index.py script.
+
+2.python get_pmid.py
+The pmid list of the corresponding gene was obtained by inputting 2001 genes.
+
+3.python get_abstract.py
+Use this script to search for relevant texts with mutations and epilepsy as query conditions.
+
+4.python sentence_level.py
+The search results are divided according to certain rules (including the logical relationship between the upper and lower sentences, including mutations, including the target gene).
+
+5.AGAC_CRF
+* The data after the clause is placed in the folder NER_classification\agac_test
+* python convert2bio.py
+* bash wapiti_agac.sh(NER part)
+* Run Decision_tree.py to get the classification result predict_result.txt
+* Manual correction of results.
+
+6.Download drubank and localize
+* Drugbank.py parses the drugbank data and localizes it to the database with index.py
+* Get_drugs.py searches the local database and compares the predicted_result pair after manual correction
 
 
 
