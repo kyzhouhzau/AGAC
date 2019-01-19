@@ -12,23 +12,23 @@
 	> 965个基因有相关文本。(/mnt/disk1/Pubtator29/functionpart1/Filtered_version2)
 	> 有文本共10221篇。(/mnt/disk1/Pubtator29/functionpart1/Filtered_version2)
 	
-*第四步
+* 第四步
 	> 切分句子，并将可能得上下句合并,基于规则。(/mnt/disk1/Pubtator29/functionpart1/sentence_level_version2)
 	> 有683个基因有相关描述，有10366个句子有相关描述。(/mnt/disk1/Pubtator29/functionpart1/sentence_level_version2)
 
-*第五步
+* 第五步
 	> 用AGAC语料库训练实体识别模型，提取10366个句子的特征。
 	> 用AGAC语料库训练分类模型，对10366个句子做LOF/GOF/Unknown分类。
 	> 去除标注为unknown的句子剩下581个句子。(/mnt/disk2/kyzhou/OMIM/AGAC_CRF/predict_result.txt)
 
-*第六步
+* 第六步
 	> 下载drugbank数据，并本地化到数据库.
 
-*第七步
+* 第七步
 	> 将581个句子所相关的基因(65个/mnt/disk1/Pubtator29/interractionpart2/genelist65.txt)到drugbank数据库搜索，并限制上下调关系相对应。	
 	> 获得药物118个（/mnt/disk1/Pubtator29/interractionpart2/filtered_drugs118.txt），基因34个（/mnt/disk1/Pubtator29/interractionpart2/filtered_genes34.txt）
 	> 获得药物基因关系对426对。(/mnt/disk1/Pubtator29/interractionpart2/result426.txt)
-*第八步
+* 第八步
 	> 人工校对426对结果，分类正确率65.49%。删除unknown的修改LOF/GOF预测相反的。(/mnt/disk1/Pubtator29/interractionpart2/result_labeled_0106.txt)
 	> 剩余309个关系对。（/mnt/disk1/Pubtator29/interractionpart2）基因29个（/mnt/disk1/Pubtator29/interractionpart2/genelist.txt）
 	> 人工矫正后的基因重新在drugbank中搜索。
