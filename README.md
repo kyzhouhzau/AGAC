@@ -38,18 +38,23 @@
 Run：
 
 1.python splitfile.py and python index.py
+
 The download pubtator text is preprocessed with splitfile.py and localized to the elasticsearch database using the index.py script.
 
 2.python get_pmid.py
+
 The pmid list of the corresponding gene was obtained by inputting 2001 genes.
 
 3.python get_abstract.py
+
 Use this script to search for relevant texts with mutations and epilepsy as query conditions.
 
 4.python sentence_level.py
+
 The search results are divided according to certain rules (including the logical relationship between the upper and lower sentences, including mutations, including the target gene).
 
 5.AGAC_CRF
+
 * The data after the clause is placed in the folder NER_classification\agac_test
 * python convert2bio.py
 * bash wapiti_agac.sh(NER part)
@@ -57,6 +62,7 @@ The search results are divided according to certain rules (including the logical
 * Manual correction of results.
 
 6.Download drubank and localize
+
 * Drugbank.py parses the drugbank data and localizes it to the database with index.py
 * Get_drugs.py searches the local database and compares the predicted_result pair after manual correction
 
