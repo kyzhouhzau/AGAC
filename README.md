@@ -1,3 +1,5 @@
+Data can be download from https://www.dropbox.com/s/33ghkmgbrhgwuof/AGAC_bio.zip?dl=0
+
 #Steps
 * step1
 	> Download all pubmed texts and localize them(functionpart/pubtator29)
